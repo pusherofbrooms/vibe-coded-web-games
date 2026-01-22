@@ -11,6 +11,9 @@ const gameCopy = {
     href: "tetris/index.html",
   },
   mystery: {},
+  snake: {
+    href: "snake/index.html",
+  },
 };
 
 
