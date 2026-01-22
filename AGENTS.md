@@ -26,6 +26,7 @@
 ## Game Descriptions
 - Conway's Game of Life: A simulation sandbox with step/run controls, randomize (about 1/3 filled), speed slider, and classic presets (glider, pulsar, lightweight ship).
 - Minesweeper: A classic grid with beginner/intermediate/expert sizes, first-click safety, flagging, timer, and a reset face.
+- Tetris: Classic falling tetrominoes with next preview, line clears, score, and keyboard controls.
 
 ## Testing & Validation
 - If tests are added later, follow existing patterns.

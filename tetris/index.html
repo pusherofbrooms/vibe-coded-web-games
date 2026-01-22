@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tetris</title>
+    <link rel="stylesheet" href="tetris.css" />
+  </head>
+  <body>
+    <main class="window">
+      <header class="window__title">
+        <h1>Tetris</h1>
+        <p>Line up falling blocks, clear rows, and chase a high score.</p>
+      </header>
+
+      <section class="layout">
+        <div class="board">
+          <div class="status-bar">
+            <div class="status-bar__panel">
+              <span class="status-label">Score</span>
+              <span id="score">0</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Lines</span>
+              <span id="lines">0</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Level</span>
+              <span id="level">1</span>
+            </div>
+            <button class="reset" id="reset-game" type="button">Start</button>
+          </div>
+
+          <div class="playfield" aria-label="Tetris playfield">
+            <canvas id="playfield" width="300" height="600"></canvas>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <section class="panel__section">
+            <h2>Next Piece</h2>
+            <canvas id="next" width="120" height="120"></canvas>
+          </section>
+
+          <section class="panel__section">
+            <h2>Controls</h2>
+            <ul class="controls">
+              <li><strong>Left/Right:</strong> Arrow or A/D</li>
+              <li><strong>Rotate:</strong> Arrow Up or W</li>
+              <li><strong>Soft Drop:</strong> Arrow Down or S</li>
+              <li><strong>Hard Drop:</strong> Space</li>
+              <li><strong>Pause:</strong> P</li>
+            </ul>
+          </section>
+
+          <section class="panel__section">
+            <h2>Actions</h2>
+            <div class="actions">
+              <button type="button" id="toggle-pause">Pause</button>
+              <button type="button" id="back-button">Back to Menu</button>
+            </div>
+          </section>
+
+          <section class="panel__section">
+            <h2>Status</h2>
+            <p id="status">Press Start to play.</p>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script src="tetris.js"></script>
+  </body>
+</html>
