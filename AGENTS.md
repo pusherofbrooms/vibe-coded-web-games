@@ -24,7 +24,7 @@
 - Maintain generous spacing for readability and accessibility.
 
 ## Game Descriptions
-- Conway's Game of Life: A simulation sandbox with step/run controls and classic patterns.
+- Conway's Game of Life: A simulation sandbox with step/run controls, randomize (about 1/3 filled), speed slider, and classic presets (glider, pulsar, lightweight ship).
 
 ## Testing & Validation
 - If tests are added later, follow existing patterns.

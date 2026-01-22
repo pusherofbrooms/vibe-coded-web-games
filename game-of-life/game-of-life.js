@@ -186,6 +186,13 @@ function setRunning(nextState) {
   }
 }
 
+function getTickDelay() {
+  const minDelay = 80;
+  const maxDelay = 800;
+  const value = Number(speedControl.value);
+  return maxDelay + minDelay - value;
+}
+
 function scheduleTick() {
   if (!running) {
     return;
@@ -194,7 +201,7 @@ function scheduleTick() {
   timerId = window.setTimeout(() => {
     nextGeneration();
     scheduleTick();
-  }, Number(speedControl.value));
+  }, getTickDelay());
 }
 
 function handleCellClick(event) {
