@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Klondike Solitaire</title>
+    <link rel="stylesheet" href="klondike-solitaire.css" />
+  </head>
+  <body>
+    <main class="window">
+      <header class="window__title">
+        <h1>Klondike Solitaire</h1>
+        <p>Stack the cards in suit from ace to king.</p>
+      </header>
+
+      <section class="layout">
+        <div class="table">
+          <div class="status-bar">
+            <div class="status-bar__panel">
+              <span class="status-label">Stock</span>
+              <span id="stock-count">24</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Moves</span>
+              <span id="move-count">0</span>
+            </div>
+            <button class="reset" type="button" id="new-game">New Game</button>
+            <button class="reset" type="button" id="undo-move">Undo</button>
+          </div>
+
+          <section class="tableau">
+            <div class="row row--top">
+              <div class="pile" data-pile="stock" aria-label="Stock"></div>
+              <div class="pile" data-pile="waste" aria-label="Waste"></div>
+              <div class="spacer"></div>
+              <div class="pile" data-pile="foundation-0" aria-label="Foundation 1"></div>
+              <div class="pile" data-pile="foundation-1" aria-label="Foundation 2"></div>
+              <div class="pile" data-pile="foundation-2" aria-label="Foundation 3"></div>
+              <div class="pile" data-pile="foundation-3" aria-label="Foundation 4"></div>
+            </div>
+            <div class="row row--tableau">
+              <div class="pile" data-pile="tableau-0" aria-label="Tableau 1"></div>
+              <div class="pile" data-pile="tableau-1" aria-label="Tableau 2"></div>
+              <div class="pile" data-pile="tableau-2" aria-label="Tableau 3"></div>
+              <div class="pile" data-pile="tableau-3" aria-label="Tableau 4"></div>
+              <div class="pile" data-pile="tableau-4" aria-label="Tableau 5"></div>
+              <div class="pile" data-pile="tableau-5" aria-label="Tableau 6"></div>
+              <div class="pile" data-pile="tableau-6" aria-label="Tableau 7"></div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="panel">
+          <section class="panel__section">
+            <h2>Controls</h2>
+            <ul class="controls">
+              <li><strong>Draw:</strong> Click stock (draw three)</li>
+              <li><strong>Move:</strong> Drag or click cards</li>
+              <li><strong>Auto:</strong> Double-click to foundation</li>
+              <li><strong>Undo:</strong> Use the Undo button</li>
+            </ul>
+          </section>
+
+          <section class="panel__section">
+            <h2>Status</h2>
+            <p id="status">Deal the cards to begin.</p>
+          </section>
+
+          <button class="back" type="button" id="back-button">Back to Menu</button>
+        </aside>
+      </section>
+    </main>
+
+    <script src="klondike-solitaire.js"></script>
+  </body>
+</html>

@@ -10,6 +10,7 @@ A browser-based collection of simple games and puzzles with a Windows XP-inspire
 - Breakout
 - Space Invaders
 - Simon Says
+- Klondike Solitaire
 
 ## Run Locally
 Open `index.html` in your browser (or serve the folder with a simple static server).
