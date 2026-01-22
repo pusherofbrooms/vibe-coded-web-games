@@ -321,6 +321,15 @@ function handleInput(event) {
 
   if (code === "Space" && type === "keydown") {
     event.preventDefault();
+    if (!gameActive) {
+      startGame();
+      launchBall();
+      return;
+    }
+    if (paused) {
+      togglePause();
+      return;
+    }
     launchBall();
     return;
   }
