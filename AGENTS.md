@@ -11,6 +11,7 @@
 - Keep UI states explicit (menu vs. game) to simplify navigation.
 - Give each game its own subdirectory under the project root.
 - Separate HTML, CSS, and JS files where practical.
+- Add a short description for each game in this file.
 
 ## Code Style
 - Favor readable names over abbreviations.
