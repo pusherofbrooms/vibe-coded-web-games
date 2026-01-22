@@ -310,6 +310,7 @@ function revealWinFlags() {
       cellElement.classList.add("flagged");
       cellElement.textContent = "🚩";
       cellElement.setAttribute("aria-label", "Flagged cell");
+      cellElement.disabled = true;
     });
   });
   flagsRemaining = 0;
