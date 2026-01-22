@@ -9,6 +9,8 @@
 - Keep the project framework-light (vanilla HTML/CSS/JS unless we decide otherwise).
 - Prefer modular game implementations with shared UI utilities.
 - Keep UI states explicit (menu vs. game) to simplify navigation.
+- Give each game its own subdirectory under the project root.
+- Separate HTML, CSS, and JS files where practical.
 
 ## Code Style
 - Favor readable names over abbreviations.
