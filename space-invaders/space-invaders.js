@@ -26,6 +26,8 @@ const state = {
   shots: [],
   enemyShots: [],
   explosions: [],
+  animationTimer: 0,
+  animationFrame: 0,
 };
 
 const input = {
@@ -68,6 +70,75 @@ const shieldConfig = {
   blocksX: 8,
   blocksY: 4,
   gap: 20,
+};
+
+const invaderSprites = {
+  squid: [
+    [
+      "00111100",
+      "01111110",
+      "11111111",
+      "10111101",
+      "11111111",
+      "01100110",
+      "11000011",
+      "01100110",
+    ],
+    [
+      "00111100",
+      "01111110",
+      "11111111",
+      "10111101",
+      "11111111",
+      "01100110",
+      "00111100",
+      "11000011",
+    ],
+  ],
+  crab: [
+    [
+      "01100110",
+      "11111111",
+      "11111111",
+      "11011011",
+      "11111111",
+      "00100100",
+      "01011010",
+      "10100101",
+    ],
+    [
+      "01100110",
+      "11111111",
+      "11111111",
+      "11011011",
+      "11111111",
+      "00100100",
+      "01011010",
+      "01000010",
+    ],
+  ],
+  octopus: [
+    [
+      "00111100",
+      "01111110",
+      "11111111",
+      "11011011",
+      "11111111",
+      "00100100",
+      "01011010",
+      "10100101",
+    ],
+    [
+      "00111100",
+      "01111110",
+      "11111111",
+      "11011011",
+      "11111111",
+      "00100100",
+      "01011010",
+      "01000010",
+    ],
+  ],
 };
 
 let enemies = [];
@@ -125,11 +196,18 @@ const createEnemies = () => {
 
   for (let row = 0; row < formation.rows; row += 1) {
     for (let col = 0; col < formation.columns; col += 1) {
+      let type = "octopus";
+      if (row === 0) {
+        type = "squid";
+      } else if (row <= 2) {
+        type = "crab";
+      }
       enemies.push({
         row,
         col,
         width: 34,
         height: 22,
+        type,
         x: formation.offsetX + col * formation.spacingX,
         y: formation.offsetY + row * formation.spacingY,
         alive: true,
@@ -177,6 +255,8 @@ const startGame = () => {
   state.shots = [];
   state.enemyShots = [];
   state.explosions = [];
+  state.animationTimer = 0;
+  state.animationFrame = 0;
   player.position.x = canvasBounds.width / 2 - player.width / 2;
   player.cooldownRemaining = 0;
   resetButton.textContent = "Restart";
@@ -192,6 +272,8 @@ const nextWave = () => {
   state.shots = [];
   state.enemyShots = [];
   state.explosions = [];
+  state.animationTimer = 0;
+  state.animationFrame = 0;
   player.position.x = canvasBounds.width / 2 - player.width / 2;
   player.cooldownRemaining = 0;
   createEnemies();
@@ -324,6 +406,14 @@ const updateExplosions = (deltaTime) => {
     spark.y += spark.vy * deltaTime;
   });
   state.explosions = state.explosions.filter((spark) => spark.life > 0);
+};
+
+const updateAnimationFrame = (deltaTime) => {
+  state.animationTimer += deltaTime;
+  if (state.animationTimer >= 0.5) {
+    state.animationTimer = 0;
+    state.animationFrame = state.animationFrame === 0 ? 1 : 0;
+  }
 };
 
 const createExplosion = (x, y, color) => {
@@ -509,6 +599,7 @@ const update = (deltaTime) => {
   updateEnemies(deltaTime);
   updateShots(deltaTime);
   updateExplosions(deltaTime);
+  updateAnimationFrame(deltaTime);
   maybeFireEnemyShot(deltaTime);
   handlePlayerHits();
   handleEnemyHits();
@@ -545,21 +636,44 @@ const drawPlayer = () => {
   );
 };
 
+const drawInvaderSprite = (enemy) => {
+  const frames = invaderSprites[enemy.type];
+  const frame = frames[state.animationFrame % frames.length];
+  const pixelSize = 3;
+  const spriteWidth = frame[0].length * pixelSize;
+  const spriteHeight = frame.length * pixelSize;
+  const startX = enemy.x + (enemy.width - spriteWidth) / 2;
+  const startY = enemy.y + (enemy.height - spriteHeight) / 2;
+
+  let color = palette.enemy3;
+  if (enemy.row === 0) {
+    color = palette.enemy1;
+  } else if (enemy.row <= 2) {
+    color = palette.enemy2;
+  }
+
+  context.fillStyle = color;
+  frame.forEach((row, rowIndex) => {
+    [...row].forEach((cell, colIndex) => {
+      if (cell !== "1") {
+        return;
+      }
+      context.fillRect(
+        startX + colIndex * pixelSize,
+        startY + rowIndex * pixelSize,
+        pixelSize,
+        pixelSize
+      );
+    });
+  });
+};
+
 const drawEnemies = () => {
   enemies.forEach((enemy) => {
     if (!enemy.alive) {
       return;
     }
-    let color = palette.enemy3;
-    if (enemy.row === 0) {
-      color = palette.enemy1;
-    } else if (enemy.row <= 2) {
-      color = palette.enemy2;
-    }
-    context.fillStyle = color;
-    context.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
-    context.fillStyle = "rgba(0,0,0,0.2)";
-    context.fillRect(enemy.x + 4, enemy.y + 4, enemy.width - 8, 6);
+    drawInvaderSprite(enemy);
   });
 };
 
