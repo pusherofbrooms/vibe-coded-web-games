@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Space Invaders</title>
+    <link rel="stylesheet" href="space-invaders.css" />
+  </head>
+  <body>
+    <main class="window">
+      <header class="window__title">
+        <h1>Space Invaders</h1>
+        <p>Defend the base by clearing alien waves before they land.</p>
+      </header>
+
+      <section class="layout">
+        <div class="board">
+          <div class="status-bar">
+            <div class="status-bar__panel">
+              <span class="status-label">Score</span>
+              <span id="score">0</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Lives</span>
+              <span id="lives">3</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Wave</span>
+              <span id="wave">1</span>
+            </div>
+            <button class="reset" id="reset-game" type="button">Start</button>
+          </div>
+
+          <div class="playfield" aria-label="Space Invaders playfield">
+            <canvas id="playfield" width="640" height="480"></canvas>
+          </div>
+
+          <div class="touch-controls" aria-label="On-screen controls">
+            <div class="touch-controls__row">
+              <button type="button" data-action="left">Left</button>
+              <button type="button" data-action="fire">Fire</button>
+              <button type="button" data-action="right">Right</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <section class="panel__section">
+            <h2>Controls</h2>
+            <ul class="controls">
+              <li><strong>Move:</strong> Arrow Keys or A/D</li>
+              <li><strong>Fire:</strong> Space</li>
+              <li><strong>Pause:</strong> P</li>
+            </ul>
+          </section>
+
+          <section class="panel__section">
+            <h2>Actions</h2>
+            <div class="actions">
+              <button type="button" id="toggle-pause">Pause</button>
+              <button type="button" id="back-button">Back to Menu</button>
+            </div>
+          </section>
+
+          <section class="panel__section">
+            <h2>Status</h2>
+            <p id="status">Press Start to begin.</p>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script src="space-invaders.js"></script>
+  </body>
+</html>

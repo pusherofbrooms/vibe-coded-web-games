@@ -29,6 +29,7 @@
 - Tetris: Classic falling tetrominoes with next preview, line clears, score, and keyboard controls.
 - Snake: A grid-based classic with growing length, speed ramping, and keyboard controls.
 - Breakout: Paddle-and-brick arcade classic with angle control, lives, and keyboard controls.
+- Space Invaders: Defend the base by clearing alien formations with shields, waves, and scoring.
 
 ## Testing & Validation
 - If tests are added later, follow existing patterns.

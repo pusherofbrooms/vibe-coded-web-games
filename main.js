@@ -16,6 +16,9 @@ const gameCopy = {
   breakout: {
     href: "breakout/index.html",
   },
+  "space-invaders": {
+    href: "space-invaders/index.html",
+  },
 };
 
 
