@@ -2,6 +2,7 @@ const gridElement = document.querySelector(".board__grid");
 const statusElement = document.getElementById("status");
 const toggleButton = document.getElementById("toggle-run");
 const stepButton = document.getElementById("step-once");
+const randomizeButton = document.getElementById("randomize-grid");
 const clearButton = document.getElementById("clear-grid");
 const speedControl = document.getElementById("speed");
 const backButton = document.getElementById("back-button");
@@ -222,6 +223,13 @@ function clearGrid() {
   updateStatus();
 }
 
+function randomizeGrid() {
+  const fillProbability = 0.33;
+  cells = cells.map((row) => row.map(() => Math.random() < fillProbability));
+  renderGrid();
+  updateStatus();
+}
+
 function applyPattern(patternKey) {
   const pattern = patterns[patternKey];
   if (!pattern) {
@@ -268,6 +276,7 @@ toggleButton.addEventListener("click", () => {
 });
 
 stepButton.addEventListener("click", handleStep);
+randomizeButton.addEventListener("click", randomizeGrid);
 clearButton.addEventListener("click", clearGrid);
 
 speedControl.addEventListener("input", () => {
