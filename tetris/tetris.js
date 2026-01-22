@@ -7,6 +7,7 @@ const statusElement = document.getElementById("status");
 const resetButton = document.getElementById("reset-game");
 const pauseButton = document.getElementById("toggle-pause");
 const backButton = document.getElementById("back-button");
+const touchButtons = document.querySelectorAll(".touch-controls button");
 
 const playfieldContext = playfieldCanvas.getContext("2d");
 const nextContext = nextCanvas.getContext("2d");
@@ -367,6 +368,34 @@ function togglePause() {
   updateStatus(paused ? "Paused." : "Good luck!");
 }
 
+function performAction(action) {
+  if (!gameActive || paused) {
+    return;
+  }
+
+  switch (action) {
+    case "left":
+      movePiece(0, -1);
+      break;
+    case "right":
+      movePiece(0, 1);
+      break;
+    case "down":
+      dropPiece();
+      dropCounter = 0;
+      break;
+    case "rotate":
+      rotatePiece();
+      break;
+    case "drop":
+      hardDrop();
+      dropCounter = 0;
+      break;
+    default:
+      break;
+  }
+}
+
 function handleInput(event) {
   const { code } = event;
   const movementKeys = [
@@ -404,24 +433,22 @@ function handleInput(event) {
   switch (code) {
     case "ArrowLeft":
     case "KeyA":
-      movePiece(0, -1);
+      performAction("left");
       break;
     case "ArrowRight":
     case "KeyD":
-      movePiece(0, 1);
+      performAction("right");
       break;
     case "ArrowDown":
     case "KeyS":
-      dropPiece();
-      dropCounter = 0;
+      performAction("down");
       break;
     case "ArrowUp":
     case "KeyW":
-      rotatePiece();
+      performAction("rotate");
       break;
     case "Space":
-      hardDrop();
-      dropCounter = 0;
+      performAction("drop");
       break;
     default:
       break;
@@ -456,6 +483,19 @@ function update(time = 0) {
 resetButton.addEventListener("click", startGame);
 pauseButton.addEventListener("click", togglePause);
 window.addEventListener("keydown", handleInput);
+touchButtons.forEach((button) => {
+  const action = button.dataset.action;
+  if (!action) {
+    return;
+  }
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    if (!gameActive) {
+      startGame();
+    }
+    performAction(action);
+  });
+});
 backButton.addEventListener("click", () => {
   window.location.href = "../index.html";
 });

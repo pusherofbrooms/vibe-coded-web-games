@@ -6,6 +6,7 @@ const statusElement = document.getElementById("status");
 const resetButton = document.getElementById("reset-game");
 const pauseButton = document.getElementById("toggle-pause");
 const backButton = document.getElementById("back-button");
+const touchButtons = document.querySelectorAll(".touch-controls button");
 
 const context = playfieldCanvas.getContext("2d");
 
@@ -335,10 +336,68 @@ function handleInput(event) {
   }
 }
 
+function startMove(direction) {
+  if (!gameActive || paused) {
+    return;
+  }
+  if (direction === "left") {
+    leftPressed = true;
+    rightPressed = false;
+  } else if (direction === "right") {
+    rightPressed = true;
+    leftPressed = false;
+  }
+}
+
+function stopMove(direction) {
+  if (direction === "left") {
+    leftPressed = false;
+  } else if (direction === "right") {
+    rightPressed = false;
+  }
+}
+
 resetButton.addEventListener("click", startGame);
 pauseButton.addEventListener("click", togglePause);
 window.addEventListener("keydown", handleInput);
 window.addEventListener("keyup", handleInput);
+touchButtons.forEach((button) => {
+  const action = button.dataset.action;
+  if (!action) {
+    return;
+  }
+  const activate = () => {
+    if (!gameActive) {
+      startGame();
+    }
+    if (action === "launch") {
+      launchBall();
+      return;
+    }
+    startMove(action);
+  };
+
+  const deactivate = () => {
+    if (action === "launch") {
+      return;
+    }
+    stopMove(action);
+  };
+
+  button.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    activate();
+  });
+  button.addEventListener("pointerup", deactivate);
+  button.addEventListener("pointerleave", deactivate);
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    activate();
+    if (action !== "launch") {
+      stopMove(action);
+    }
+  });
+});
 backButton.addEventListener("click", () => {
   window.location.href = "../index.html";
 });

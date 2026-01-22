@@ -122,6 +122,25 @@ canvas {
   border: 1px solid #2a3c57;
 }
 
+.touch-controls {
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+}
+
+.touch-controls__row {
+  display: flex;
+  gap: 10px;
+}
+
+.touch-controls button {
+  min-width: 90px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  touch-action: manipulation;
+}
+
 .panel {
   border-radius: 10px;
   background: linear-gradient(180deg, #ffffff 0%, #e7ebf2 100%);

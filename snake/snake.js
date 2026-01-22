@@ -5,6 +5,7 @@ const statusElement = document.getElementById("status");
 const resetButton = document.getElementById("reset-game");
 const pauseButton = document.getElementById("toggle-pause");
 const backButton = document.getElementById("back-button");
+const touchButtons = document.querySelectorAll(".touch-controls button");
 
 const context = playfieldCanvas.getContext("2d");
 
@@ -32,6 +33,13 @@ const directionVectors = {
   KeyS: { row: 1, column: 0 },
   KeyA: { row: 0, column: -1 },
   KeyD: { row: 0, column: 1 },
+};
+
+const touchDirectionMap = {
+  up: directionVectors.ArrowUp,
+  down: directionVectors.ArrowDown,
+  left: directionVectors.ArrowLeft,
+  right: directionVectors.ArrowRight,
 };
 
 let snake = [];
@@ -125,6 +133,16 @@ function isOppositeDirection(nextDirection) {
   );
 }
 
+function setDirection(nextDirection) {
+  if (!gameActive || paused) {
+    return;
+  }
+
+  if (!isOppositeDirection(nextDirection)) {
+    pendingDirection = nextDirection;
+  }
+}
+
 function handleInput(event) {
   const { code } = event;
   if (code === "KeyP") {
@@ -138,13 +156,7 @@ function handleInput(event) {
   }
 
   event.preventDefault();
-  if (!gameActive || paused) {
-    return;
-  }
-
-  if (!isOppositeDirection(nextDirection)) {
-    pendingDirection = nextDirection;
-  }
+  setDirection(nextDirection);
 }
 
 function startGame() {
@@ -225,6 +237,22 @@ function update(time = 0) {
 resetButton.addEventListener("click", startGame);
 pauseButton.addEventListener("click", togglePause);
 window.addEventListener("keydown", handleInput);
+touchButtons.forEach((button) => {
+  const action = button.dataset.action;
+  if (!action) {
+    return;
+  }
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    if (!gameActive) {
+      startGame();
+    }
+    const nextDirection = touchDirectionMap[action];
+    if (nextDirection) {
+      setDirection(nextDirection);
+    }
+  });
+});
 backButton.addEventListener("click", () => {
   window.location.href = "../index.html";
 });
