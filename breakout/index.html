@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Breakout</title>
+    <link rel="stylesheet" href="breakout.css" />
+  </head>
+  <body>
+    <main class="window">
+      <header class="window__title">
+        <h1>Breakout</h1>
+        <p>Break through the brick wall with sharp angles and steady aim.</p>
+      </header>
+
+      <section class="layout">
+        <div class="board">
+          <div class="status-bar">
+            <div class="status-bar__panel">
+              <span class="status-label">Score</span>
+              <span id="score">0</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Lives</span>
+              <span id="lives">3</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Level</span>
+              <span id="level">1</span>
+            </div>
+            <button class="reset" id="reset-game" type="button">Start</button>
+          </div>
+
+          <div class="playfield" aria-label="Breakout playfield">
+            <canvas id="playfield" width="600" height="400"></canvas>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <section class="panel__section">
+            <h2>Controls</h2>
+            <ul class="controls">
+              <li><strong>Move:</strong> Arrow Keys or A/D</li>
+              <li><strong>Launch:</strong> Space</li>
+              <li><strong>Pause:</strong> P</li>
+            </ul>
+          </section>
+
+          <section class="panel__section">
+            <h2>Actions</h2>
+            <div class="actions">
+              <button type="button" id="toggle-pause">Pause</button>
+              <button type="button" id="back-button">Back to Menu</button>
+            </div>
+          </section>
+
+          <section class="panel__section">
+            <h2>Status</h2>
+            <p id="status">Press Start to play.</p>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script src="breakout.js"></script>
+  </body>
+</html>

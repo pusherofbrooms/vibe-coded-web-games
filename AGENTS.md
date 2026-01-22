@@ -28,6 +28,7 @@
 - Minesweeper: A classic grid with beginner/intermediate/expert sizes, first-click safety, flagging, timer, and a reset face.
 - Tetris: Classic falling tetrominoes with next preview, line clears, score, and keyboard controls.
 - Snake: A grid-based classic with growing length, speed ramping, and keyboard controls.
+- Breakout: Paddle-and-brick arcade classic with angle control, lives, and keyboard controls.
 
 ## Testing & Validation
 - If tests are added later, follow existing patterns.

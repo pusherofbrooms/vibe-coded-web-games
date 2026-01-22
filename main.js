@@ -13,6 +13,9 @@ const gameCopy = {
   snake: {
     href: "snake/index.html",
   },
+  breakout: {
+    href: "breakout/index.html",
+  },
 };
 
 
