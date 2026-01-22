@@ -15,6 +15,11 @@
 - Use consistent formatting and avoid inline comments unless requested.
 - Keep functions focused; split large components into helpers.
 
+## UI Style
+- Keep the UI in a Windows XP silver/gray theme.
+- Prefer soft gradients, beveled edges, and clear focus states.
+- Maintain generous spacing for readability and accessibility.
+
 ## Testing & Validation
 - If tests are added later, follow existing patterns.
 - Manually verify the menu and return flow after changes.
