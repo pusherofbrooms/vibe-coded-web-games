@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Conway's Game of Life</title>
+    <link rel="stylesheet" href="game-of-life.css" />
+  </head>
+  <body>
+    <main class="window">
+      <header class="window__title">
+        <h1>Conway's Game of Life</h1>
+        <p>Seed the grid and watch your colony evolve.</p>
+      </header>
+
+      <section class="layout">
+        <div class="board" aria-live="polite">
+          <div class="board__grid" role="grid" aria-label="Game of Life grid"></div>
+        </div>
+
+        <aside class="panel" aria-label="Controls">
+          <div class="panel__section">
+            <h2>Simulation</h2>
+            <div class="controls">
+              <button type="button" id="toggle-run">Start</button>
+              <button type="button" id="step-once">Step</button>
+              <button type="button" id="clear-grid">Clear</button>
+            </div>
+          </div>
+
+          <div class="panel__section">
+            <h2>Speed</h2>
+            <label class="slider" for="speed">
+              <span>Slow</span>
+              <input id="speed" type="range" min="80" max="800" value="320" />
+              <span>Fast</span>
+            </label>
+          </div>
+
+          <div class="panel__section">
+            <h2>Presets</h2>
+            <div class="controls">
+              <button type="button" data-pattern="glider">Glider</button>
+              <button type="button" data-pattern="pulsar">Pulsar</button>
+              <button type="button" data-pattern="lwss">Lightweight Ship</button>
+            </div>
+          </div>
+
+          <div class="panel__section">
+            <h2>Status</h2>
+            <p class="status" id="status">Paused · 0 living cells</p>
+          </div>
+
+          <button class="back" type="button" id="back-button">Back to Menu</button>
+        </aside>
+      </section>
+    </main>
+
+    <script src="game-of-life.js"></script>
+  </body>
+</html>

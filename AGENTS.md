@@ -23,6 +23,9 @@
 - Prefer soft gradients, beveled edges, and clear focus states.
 - Maintain generous spacing for readability and accessibility.
 
+## Game Descriptions
+- Conway's Game of Life: A simulation sandbox with step/run controls and classic patterns.
+
 ## Testing & Validation
 - If tests are added later, follow existing patterns.
 - Manually verify the menu and return flow after changes.
