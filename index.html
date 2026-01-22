@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Games & Puzzles</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "Tahoma", "Segoe UI", sans-serif;
+        background-color: #dadfe6;
+        color: #1c1c1c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: radial-gradient(circle at top, #f7f7fb 0%, #dadfe6 55%, #bfc6d2 100%);
+        color: inherit;
+      }
+
+      main {
+        width: min(100%, 960px);
+        padding: 32px 24px 48px;
+        background: linear-gradient(180deg, #f5f6f8 0%, #d8dde5 100%);
+        border: 1px solid #9fa8b7;
+        border-radius: 12px;
+        box-shadow: 0 10px 24px rgba(21, 35, 58, 0.25);
+      }
+
+      header {
+        margin-bottom: 32px;
+        text-align: center;
+      }
+
+      header h1 {
+        margin: 0 0 8px;
+        font-size: clamp(2rem, 3vw, 3rem);
+        color: #1b2a4a;
+        text-shadow: 0 1px 0 #ffffff;
+      }
+
+      header p {
+        margin: 0;
+        color: #3a4a66;
+      }
+
+      .menu {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .menu button {
+        padding: 16px 18px;
+        border-radius: 6px;
+        border: 1px solid #7f8aa0;
+        background: linear-gradient(180deg, #f8f9fb 0%, #d9dee8 100%);
+        color: #1c1c1c;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: inset 0 1px 0 #ffffff, 0 1px 2px rgba(0, 0, 0, 0.2);
+        transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.2s ease;
+      }
+
+      .menu button:hover,
+      .menu button:focus-visible {
+        border-color: #4e6aa0;
+        box-shadow: inset 0 1px 0 #ffffff, 0 0 0 2px rgba(94, 129, 199, 0.35);
+        transform: translateY(-1px);
+      }
+
+      .menu button:active {
+        transform: translateY(0);
+        background: linear-gradient(180deg, #d1d7e2 0%, #f2f5fa 100%);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .panel {
+        border-radius: 10px;
+        background: linear-gradient(180deg, #ffffff 0%, #e7ebf2 100%);
+        border: 1px solid #9aa4b2;
+        padding: 24px;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        box-shadow: inset 0 1px 0 #ffffff;
+      }
+
+      .panel h2 {
+        margin: 0;
+        color: #1b2a4a;
+      }
+
+      .panel p {
+        margin: 0;
+        color: #3a4a66;
+      }
+
+      .panel button {
+        align-self: flex-start;
+        padding: 8px 18px;
+        border-radius: 4px;
+        border: 1px solid #7f8aa0;
+        background: linear-gradient(180deg, #f8f9fb 0%, #d9dee8 100%);
+        color: #1c1c1c;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: inset 0 1px 0 #ffffff, 0 1px 2px rgba(0, 0, 0, 0.2);
+      }
+
+      .panel button:hover,
+      .panel button:focus-visible {
+        border-color: #4e6aa0;
+        box-shadow: inset 0 1px 0 #ffffff, 0 0 0 2px rgba(94, 129, 199, 0.35);
+      }
+
+      .panel button:active {
+        background: linear-gradient(180deg, #d1d7e2 0%, #f2f5fa 100%);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      @media (max-width: 640px) {
+        main {
+          padding: 24px 16px 40px;
+        }
+
+        .panel {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Games & Puzzles</h1>
+        <p>Pick a game to start, then return here anytime.</p>
+      </header>
+
+      <section class="menu" aria-label="Game menu">
+        <button type="button" data-game="minesweeper">Minesweeper</button>
+        <button type="button" data-game="conway">Conway's Game of Life</button>
+        <button type="button" data-game="tetris">Tetris</button>
+        <button type="button" data-game="mystery">Surprise Me</button>
+      </section>
+
+      <section class="panel" id="game-panel" aria-live="polite">
+        <h2>Welcome!</h2>
+        <p>Select a game to see it here. We'll keep the menu available for quick switching.</p>
+        <button type="button" id="back-button" hidden>Back to Menu</button>
+      </section>
+    </main>
+
+    <script>
+      const panel = document.getElementById("game-panel");
+      const backButton = document.getElementById("back-button");
+      const menuButtons = document.querySelectorAll(".menu button");
+
+      const gameCopy = {
+        minesweeper: {
+          title: "Minesweeper",
+          body: "Flag the mines and clear the grid. We'll drop the full board here soon.",
+        },
+        conway: {
+          title: "Conway's Game of Life",
+          body: "Seed a pattern and watch it evolve. Controls will appear in this panel.",
+        },
+        tetris: {
+          title: "Tetris",
+          body: "Stack and clear the lines. Gameplay is on deck for this space.",
+        },
+        mystery: {
+          title: "Surprise Me",
+          body: "We're keeping room for more puzzles. Tell us what you want next!",
+        },
+      };
+
+      function showGame(gameKey) {
+        const { title, body } = gameCopy[gameKey];
+        panel.querySelector("h2").textContent = title;
+        panel.querySelector("p").textContent = body;
+        backButton.hidden = false;
+        backButton.focus();
+      }
+
+      function showMenu() {
+        panel.querySelector("h2").textContent = "Welcome!";
+        panel.querySelector("p").textContent =
+          "Select a game to see it here. We'll keep the menu available for quick switching.";
+        backButton.hidden = true;
+      }
+
+      menuButtons.forEach((button) => {
+        button.addEventListener("click", () => showGame(button.dataset.game));
+      });
+
+      backButton.addEventListener("click", showMenu);
+    </script>
+  </body>
+</html>
