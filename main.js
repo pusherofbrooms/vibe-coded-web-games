@@ -1,7 +1,9 @@
 const menuButtons = document.querySelectorAll(".menu button");
 
 const gameCopy = {
-  minesweeper: {},
+  minesweeper: {
+    href: "minesweeper/index.html",
+  },
   conway: {
     href: "game-of-life/index.html",
   },
