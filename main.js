@@ -19,6 +19,9 @@ const gameCopy = {
   "space-invaders": {
     href: "space-invaders/index.html",
   },
+  "simon-says": {
+    href: "simon-says/index.html",
+  },
 };
 
 

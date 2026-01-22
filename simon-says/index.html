@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Simon Says</title>
+    <link rel="stylesheet" href="simon-says.css" />
+  </head>
+  <body>
+    <main class="window">
+      <header class="window__title">
+        <h1>Simon Says</h1>
+        <p>Repeat the pattern, one tone at a time.</p>
+      </header>
+
+      <section class="layout">
+        <div class="board">
+          <div class="status-bar">
+            <div class="status-bar__panel">
+              <span class="status-label">Round</span>
+              <span id="round">0</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Best</span>
+              <span id="best">0</span>
+            </div>
+            <button class="reset" id="reset-game" type="button">Start</button>
+          </div>
+
+          <div class="playfield" aria-label="Simon Says playfield">
+            <div class="simon" role="application" aria-label="Simon Says buttons">
+              <button class="simon__pad simon__pad--green" data-pad="green" aria-label="Green"></button>
+              <button class="simon__pad simon__pad--red" data-pad="red" aria-label="Red"></button>
+              <button class="simon__pad simon__pad--yellow" data-pad="yellow" aria-label="Yellow"></button>
+              <button class="simon__pad simon__pad--blue" data-pad="blue" aria-label="Blue"></button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <section class="panel__section">
+            <h2>Controls</h2>
+            <ul class="controls">
+              <li><strong>Play:</strong> Click/tap the pads</li>
+              <li><strong>Keyboard:</strong> 1-4 or Q/W/A/S</li>
+              <li><strong>Pause:</strong> P</li>
+            </ul>
+          </section>
+
+          <section class="panel__section">
+            <h2>Actions</h2>
+            <div class="actions">
+              <button type="button" id="toggle-pause">Pause</button>
+              <button type="button" id="back-button">Back to Menu</button>
+            </div>
+          </section>
+
+          <section class="panel__section">
+            <h2>Status</h2>
+            <p id="status">Press Start to begin.</p>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script src="simon-says.js"></script>
+  </body>
+</html>

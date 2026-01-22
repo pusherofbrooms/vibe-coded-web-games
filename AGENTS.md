@@ -30,6 +30,7 @@
 - Snake: A grid-based classic with growing length, speed ramping, and keyboard controls.
 - Breakout: Paddle-and-brick arcade classic with angle control, lives, and keyboard controls.
 - Space Invaders: Defend the base by clearing alien formations with shields, waves, and scoring.
+- Simon Says: Repeat the growing color-and-tone sequence using pads or keyboard cues.
 
 ## Testing & Validation
 - If tests are added later, follow existing patterns.
