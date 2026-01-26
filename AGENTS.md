@@ -12,6 +12,7 @@
 - Give each game its own subdirectory under the project root.
 - Separate HTML, CSS, and JS files where practical.
 - Add a short description for each game in this file.
+- Do not ask follow-up questions after completing a task unless explicitly requested.
 
 ## Code Style
 - Favor readable names over abbreviations.
