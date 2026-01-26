@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hamurabi</title>
+    <link rel="stylesheet" href="hamurabi.css" />
+  </head>
+  <body>
+    <main class="window">
+      <header class="window__title">
+        <h1>Hamurabi</h1>
+        <p>Guide ancient Sumeria through ten years of rule.</p>
+      </header>
+
+      <section class="layout">
+        <div class="board">
+          <div class="status-bar" aria-live="polite">
+            <div class="status-bar__panel">
+              <span class="status-label">Year</span>
+              <span id="year">1</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Population</span>
+              <span id="population">95</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Grain</span>
+              <span id="grain">2800</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Land</span>
+              <span id="land">1000</span>
+            </div>
+          </div>
+
+          <section class="report" aria-label="Yearly report">
+            <pre id="report" class="report__text"></pre>
+          </section>
+        </div>
+
+        <aside class="panel">
+          <section class="panel__section">
+            <h2>Decisions</h2>
+            <form id="decision-form" class="decisions">
+              <label>
+                Acres to buy (positive) or sell (negative)
+                <input type="number" id="acres-trade" step="1" value="0" />
+              </label>
+              <label>
+                Bushels to feed the people
+                <input type="number" id="bushels-feed" step="1" value="0" />
+              </label>
+              <label>
+                Acres to plant with seed
+                <input type="number" id="acres-plant" step="1" value="0" />
+              </label>
+
+              <button type="submit" id="end-year">End Year</button>
+            </form>
+            <p id="validation" class="validation" role="alert"></p>
+          </section>
+
+          <section class="panel__section">
+            <h2>Market & Limits</h2>
+            <ul class="stats">
+              <li>Land price: <span id="land-price">19</span> bushels/acre</li>
+              <li>Max plantable: <span id="max-plant">0</span> acres</li>
+              <li>Grain available: <span id="grain-available">0</span> bushels</li>
+            </ul>
+          </section>
+
+          <section class="panel__section">
+            <h2>Actions</h2>
+            <div class="actions">
+              <button type="button" id="reset-game">Restart</button>
+              <button type="button" id="back-button">Back to Menu</button>
+            </div>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script src="hamurabi.js"></script>
+  </body>
+</html>

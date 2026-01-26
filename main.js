@@ -25,6 +25,9 @@ const gameCopy = {
   "klondike-solitaire": {
     href: "klondike-solitaire/index.html",
   },
+  hamurabi: {
+    href: "hamurabi/index.html",
+  },
 };
 
 

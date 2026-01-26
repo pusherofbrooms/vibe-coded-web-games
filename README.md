@@ -4,6 +4,7 @@ A browser-based collection of simple games and puzzles with a Windows XP-inspire
 
 ## Included Games
 - Conway's Game of Life
+- Hamurabi
 - Minesweeper
 - Tetris
 - Snake
