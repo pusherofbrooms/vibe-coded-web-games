@@ -22,6 +22,9 @@ const gameCopy = {
   "simon-says": {
     href: "simon-says/index.html",
   },
+  slalom: {
+    href: "slalom/index.html",
+  },
   "klondike-solitaire": {
     href: "klondike-solitaire/index.html",
   },

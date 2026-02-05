@@ -36,6 +36,7 @@
 - Breakout: Paddle-and-brick arcade classic with angle control, lives, and keyboard controls.
 - Space Invaders: Defend the base by clearing alien formations with shields, waves, and scoring.
 - Simon Says: Repeat the growing color-and-tone sequence using pads or keyboard cues.
+- Slalom: Drive a weaving downhill road that narrows and speeds up over time while dodging obstacles.
 - Klondike Solitaire: Classic draw-three Klondike with drag, double-click to foundations, and undo support.
 
 ## Testing & Validation

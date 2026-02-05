@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Slalom</title>
+    <link rel="stylesheet" href="slalom.css" />
+  </head>
+  <body>
+    <main class="window">
+      <header class="window__title">
+        <h1>Slalom</h1>
+        <p>Stay on the road, dodge obstacles, and handle the narrowing turns.</p>
+      </header>
+
+      <section class="layout">
+        <div class="board">
+          <div class="status-bar">
+            <div class="status-bar__panel">
+              <span class="status-label">Score</span>
+              <span id="score">0</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Speed</span>
+              <span id="speed">0</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Road</span>
+              <span id="road-width">0</span>
+            </div>
+            <button class="reset" id="reset-game" type="button">Start</button>
+          </div>
+
+          <div class="playfield" aria-label="Slalom playfield">
+            <canvas id="slalom-canvas" width="520" height="640"></canvas>
+          </div>
+
+          <div class="touch-controls" aria-label="On-screen controls">
+            <button type="button" data-action="left">Left</button>
+            <button type="button" data-action="right">Right</button>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <section class="panel__section">
+            <h2>Controls</h2>
+            <ul class="controls">
+              <li><strong>Steer:</strong> Arrow Keys or A/D</li>
+              <li><strong>Pause:</strong> P</li>
+            </ul>
+          </section>
+
+          <section class="panel__section">
+            <h2>Actions</h2>
+            <div class="actions">
+              <button type="button" id="toggle-pause">Pause</button>
+              <button type="button" id="back-button">Back to Menu</button>
+            </div>
+          </section>
+
+          <section class="panel__section">
+            <h2>Status</h2>
+            <p id="status">Press Start to play.</p>
+          </section>
+
+          <section class="panel__section">
+            <h2>How to Play</h2>
+            <p>
+              Steer along the winding road and avoid the obstacles as the slope speeds up.
+              The road narrows over time, so stay centered through the tighter turns.
+              Your score climbs with distance while you keep to the right half of the road.
+            </p>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script src="slalom.js"></script>
+  </body>
+</html>
