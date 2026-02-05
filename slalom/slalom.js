@@ -253,19 +253,36 @@ function drawRoad() {
     context.fillStyle = colors.road;
     context.fillRect(left, y, segment.width, segmentHeight);
 
-    if (index % 4 === 0) {
-      context.fillStyle = colors.lane;
-      const laneWidth = 4;
-      const laneHeight = segmentHeight * 0.7;
-      context.fillRect(segment.center - laneWidth / 2, y + segmentHeight * 0.15, laneWidth, laneHeight);
-    }
-
     context.strokeStyle = "rgba(255,255,255,0.2)";
     context.beginPath();
     context.moveTo(left, y + 0.5);
     context.lineTo(right, y + 0.5);
     context.stroke();
   });
+
+  const laneWidth = 4;
+  const laneLength = segmentHeight * 0.7;
+  const laneGap = segmentHeight * 3.3;
+  const dashCycle = laneLength + laneGap;
+
+  context.save();
+  context.strokeStyle = colors.lane;
+  context.lineWidth = laneWidth;
+  context.lineCap = "round";
+  context.setLineDash([laneLength, laneGap]);
+  context.lineDashOffset = -(scrollOffset % dashCycle);
+  context.beginPath();
+  segments.forEach((segment, index) => {
+    const y = -scrollOffset + index * segmentHeight + segmentHeight / 2;
+    const laneX = Math.round(segment.center) + 0.5;
+    if (index === 0) {
+      context.moveTo(laneX, y);
+    } else {
+      context.lineTo(laneX, y);
+    }
+  });
+  context.stroke();
+  context.restore();
 }
 
 function drawObstacles() {
