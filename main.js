@@ -7,6 +7,9 @@ const gameCopy = {
   conway: {
     href: "game-of-life/index.html",
   },
+  defender: {
+    href: "defender/index.html",
+  },
   tetris: {
     href: "tetris/index.html",
   },

@@ -3,15 +3,17 @@
 A browser-based collection of simple games and puzzles with a Windows XP-inspired theme.
 
 ## Included Games
-- Conway's Game of Life
-- Hamurabi
-- Minesweeper
-- Tetris
-- Snake
 - Breakout
-- Space Invaders
-- Simon Says
+- Conway's Game of Life
+- Defender
+- Hamurabi
 - Klondike Solitaire
+- Minesweeper
+- Simon Says
+- Slalom
+- Snake
+- Space Invaders
+- Tetris
 
 ## Run Locally
 Open `index.html` in your browser (or serve the folder with a simple static server).

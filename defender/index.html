@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Defender</title>
+    <link rel="stylesheet" href="defender.css" />
+  </head>
+  <body>
+    <main class="window">
+      <header class="window__title">
+        <h1>Defender</h1>
+        <p>Thrust through a wraparound frontier, stop abductions, and protect civilians.</p>
+      </header>
+
+      <section class="layout">
+        <div class="board">
+          <div class="status-bar">
+            <div class="status-bar__panel">
+              <span class="status-label">Score</span>
+              <span id="score">0</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Lives</span>
+              <span id="lives">3</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Wave</span>
+              <span id="wave">1</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Humans</span>
+              <span id="humans">0</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Bombs</span>
+              <span id="bombs">3</span>
+            </div>
+            <button class="reset" id="reset-game" type="button">Start</button>
+          </div>
+
+          <div class="playfield" aria-label="Defender playfield">
+            <canvas id="defender-canvas" width="920" height="460"></canvas>
+          </div>
+
+          <div class="touch-controls" aria-label="On-screen controls">
+            <div class="touch-controls__row">
+              <button type="button" data-action="left">Left</button>
+              <button type="button" data-action="up">Up</button>
+              <button type="button" data-action="down">Down</button>
+              <button type="button" data-action="right">Right</button>
+            </div>
+            <div class="touch-controls__row">
+              <button type="button" data-action="thrust">Thrust</button>
+              <button type="button" data-action="fire">Fire</button>
+              <button type="button" data-action="bomb">Bomb</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <section class="panel__section">
+            <h2>Controls</h2>
+            <ul class="controls">
+              <li><strong>Move:</strong> Arrow Keys or W/A/S/D</li>
+              <li><strong>Thrust:</strong> Shift</li>
+              <li><strong>Fire:</strong> Space</li>
+              <li><strong>Smart Bomb:</strong> B</li>
+              <li><strong>Hyperspace:</strong> H</li>
+              <li><strong>Pause:</strong> P</li>
+            </ul>
+          </section>
+
+          <section class="panel__section">
+            <h2>Actions</h2>
+            <div class="actions">
+              <button type="button" id="toggle-pause">Pause</button>
+              <button type="button" id="back-button">Back to Menu</button>
+            </div>
+          </section>
+
+          <section class="panel__section">
+            <h2>Status</h2>
+            <p id="status">Press Start to deploy.</p>
+          </section>
+
+          <section class="panel__section">
+            <h2>How to Play</h2>
+            <p>
+              Patrol the horizon and shoot landers before they escape with civilians. Catch
+              falling civilians with your ship to save them and keep the colony alive.
+            </p>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script src="defender.js"></script>
+  </body>
+</html>
