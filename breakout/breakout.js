@@ -38,7 +38,6 @@ const brickLayout = {
   height: 18,
   padding: 8,
   offsetTop: 50,
-  offsetLeft: 30,
 };
 
 const brickColors = ["#f38c85", "#f3c26b", "#92d48c", "#6fb3e8", "#b08be8"];
@@ -54,13 +53,17 @@ let leftPressed = false;
 let rightPressed = false;
 
 function createBricks() {
+  const totalBrickWidth =
+    brickLayout.columns * brickLayout.width + (brickLayout.columns - 1) * brickLayout.padding;
+  const offsetLeft = Math.max(0, (playfieldWidth - totalBrickWidth) / 2);
+
   bricks = [];
   for (let row = 0; row < brickLayout.rows; row += 1) {
     for (let column = 0; column < brickLayout.columns; column += 1) {
       bricks.push({
         row,
         column,
-        x: brickLayout.offsetLeft + column * (brickLayout.width + brickLayout.padding),
+        x: offsetLeft + column * (brickLayout.width + brickLayout.padding),
         y: brickLayout.offsetTop + row * (brickLayout.height + brickLayout.padding),
         color: brickColors[row % brickColors.length],
         active: true,
