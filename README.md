@@ -3,6 +3,7 @@
 A browser-based collection of simple games and puzzles with a Windows XP-inspired theme.
 
 ## Included Games
+- Asteroids
 - Breakout
 - Conway's Game of Life
 - Defender

@@ -1,28 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Asteroids</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        canvas {
-            border: 2px solid #fff;
-            background: #000;
-        }
-    </style>
-</head>
-<body>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <link rel="stylesheet" href="asteroids.css" />
+  </head>
+  <body>
+    <main class="window">
+      <header class="window__title">
+        <h1>Asteroids</h1>
+        <p>Drift through open space, blast rocks, and survive wave after wave.</p>
+      </header>
+
+      <section class="layout">
+        <div class="board">
+          <div class="status-bar">
+            <div class="status-bar__panel">
+              <span class="status-label">Score</span>
+              <span id="score">0</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Lives</span>
+              <span id="lives">3</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Level</span>
+              <span id="level">1</span>
+            </div>
+            <button class="reset" id="reset-game" type="button">Start</button>
+          </div>
+
+          <div class="playfield" aria-label="Asteroids playfield">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+          </div>
+
+          <div class="touch-controls" aria-label="On-screen controls">
+            <div class="touch-controls__row">
+              <button type="button" data-action="left">Left</button>
+              <button type="button" data-action="thrust">Thrust</button>
+              <button type="button" data-action="right">Right</button>
+            </div>
+            <div class="touch-controls__row">
+              <button type="button" data-action="fire">Fire</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <section class="panel__section">
+            <h2>Controls</h2>
+            <ul class="controls">
+              <li><strong>Turn:</strong> Arrow Left/Right or A/D</li>
+              <li><strong>Thrust:</strong> Arrow Up or W</li>
+              <li><strong>Fire:</strong> Space</li>
+              <li><strong>Pause:</strong> P</li>
+            </ul>
+          </section>
+
+          <section class="panel__section">
+            <h2>Actions</h2>
+            <div class="actions">
+              <button type="button" id="toggle-pause">Pause</button>
+              <button type="button" id="back-button">Back to Menu</button>
+            </div>
+          </section>
+
+          <section class="panel__section">
+            <h2>Status</h2>
+            <p id="status">Press Start or Space to begin.</p>
+          </section>
+        </aside>
+      </section>
+    </main>
+
     <script src="js/input.js"></script>
     <script src="js/collision.js"></script>
     <script src="js/bullet.js"></script>
@@ -30,5 +81,5 @@
     <script src="js/ship.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/main.js"></script>
-</body>
+  </body>
 </html>

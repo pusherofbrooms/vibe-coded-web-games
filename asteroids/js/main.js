@@ -1,5 +1,13 @@
 const Canvas = document.getElementById('gameCanvas');
 const ctx = Canvas.getContext('2d');
+const scoreElement = document.getElementById('score');
+const livesElement = document.getElementById('lives');
+const levelElement = document.getElementById('level');
+const statusElement = document.getElementById('status');
+const resetButton = document.getElementById('reset-game');
+const pauseButton = document.getElementById('toggle-pause');
+const backButton = document.getElementById('back-button');
+const touchButtons = document.querySelectorAll('.touch-controls button');
 
 let lastTime = 0;
 let ship = null;
@@ -11,8 +19,35 @@ let gameOverTime = 0;
 const GameState = {
   MENU: 'MENU',
   PLAYING: 'PLAYING',
+  PAUSED: 'PAUSED',
   GAMEOVER: 'GAMEOVER'
 };
+
+function updateStatus(message) {
+  if (statusElement) {
+    statusElement.textContent = message;
+  }
+}
+
+function updateHUD() {
+  if (!ship) {
+    if (scoreElement) scoreElement.textContent = '0';
+    if (livesElement) livesElement.textContent = '3';
+    if (levelElement) levelElement.textContent = '1';
+    return;
+  }
+
+  if (scoreElement) scoreElement.textContent = String(UI.score);
+  if (livesElement) livesElement.textContent = String(ship.lives);
+  if (levelElement) levelElement.textContent = String(UI.level);
+}
+
+function setPlaying(isPlaying) {
+  if (!pauseButton) {
+    return;
+  }
+  pauseButton.textContent = isPlaying ? 'Pause' : 'Resume';
+}
 
 function initGame() {
   ship = new Ship();
@@ -26,6 +61,12 @@ function initGame() {
   
   gameState = GameState.PLAYING;
   gameOverTime = 0;
+  updateHUD();
+  updateStatus('Destroy the asteroid field.');
+  if (resetButton) {
+    resetButton.textContent = 'Restart';
+  }
+  setPlaying(true);
 }
 
 function createAsteroid() {
@@ -43,6 +84,8 @@ function update(deltaTime) {
     if (Input.isDown('Space') && Date.now() - gameOverTime >= 2000) {
       initGame();
     }
+  } else if (gameState === GameState.PAUSED) {
+    return;
   } else if (gameState === GameState.PLAYING) {
     ship.update(deltaTime);
     
@@ -68,8 +111,15 @@ function update(deltaTime) {
     for (let aIndex = 0; aIndex < asteroids.length; aIndex++) {
       const asteroid = asteroids[aIndex];
       if (Collision.checkCircle(ship.x, ship.y, ship.radius, asteroid.x, asteroid.y, asteroid.radius)) {
+        const previousLives = ship.lives;
         ship.hit();
         asteroids.splice(aIndex, 1);
+        if (ship.lives < previousLives && ship.lives > 0) {
+          updateStatus('Ship hit! Respawning...');
+        } else if (gameState === GameState.GAMEOVER) {
+          updateStatus('Game over. Press Start or Space to play again.');
+          setPlaying(false);
+        }
       }
     }
     
@@ -78,6 +128,8 @@ function update(deltaTime) {
         createAsteroid();
       }
     }
+
+    updateHUD();
   }
 }
 
@@ -92,11 +144,78 @@ function draw() {
     bullets.forEach(bullet => bullet.draw(ctx));
     asteroids.forEach(asteroid => asteroid.draw(ctx));
     UI.draw(ctx);
+  } else if (gameState === GameState.PAUSED) {
+    ship.draw(ctx);
+    bullets.forEach(bullet => bullet.draw(ctx));
+    asteroids.forEach(asteroid => asteroid.draw(ctx));
+    UI.draw(ctx);
+    UI.drawMessage(ctx, 'PAUSED', 'Press P or Resume to continue');
   } else if (gameState === GameState.GAMEOVER) {
     UI.draw(ctx);
     const canRestart = Date.now() - gameOverTime >= 2000;
     UI.drawMessage(ctx, 'GAME OVER', `Final Score: ${UI.score} - ${canRestart ? 'Press SPACE to Restart' : 'Wait...'}`);
   }
+}
+
+function togglePause() {
+  if (gameState === GameState.PLAYING) {
+    gameState = GameState.PAUSED;
+    updateStatus('Paused.');
+    setPlaying(false);
+  } else if (gameState === GameState.PAUSED) {
+    gameState = GameState.PLAYING;
+    updateStatus('Destroy the asteroid field.');
+    setPlaying(true);
+  }
+}
+
+function setTouchKey(action, isDown) {
+  if (action === 'left') Input.keys.ArrowLeft = isDown;
+  if (action === 'right') Input.keys.ArrowRight = isDown;
+  if (action === 'thrust') Input.keys.ArrowUp = isDown;
+  if (action === 'fire') Input.keys.Space = isDown;
+}
+
+function bindUI() {
+  if (resetButton) {
+    resetButton.addEventListener('click', initGame);
+  }
+
+  if (pauseButton) {
+    pauseButton.addEventListener('click', togglePause);
+  }
+
+  if (backButton) {
+    backButton.addEventListener('click', () => {
+      window.location.href = '../index.html';
+    });
+  }
+
+  touchButtons.forEach((button) => {
+    const action = button.dataset.action;
+    if (!action) return;
+
+    const press = (event) => {
+      event.preventDefault();
+      setTouchKey(action, true);
+    };
+    const release = (event) => {
+      event.preventDefault();
+      setTouchKey(action, false);
+    };
+
+    button.addEventListener('pointerdown', press);
+    button.addEventListener('pointerup', release);
+    button.addEventListener('pointercancel', release);
+    button.addEventListener('pointerleave', release);
+  });
+
+  window.addEventListener('keydown', (event) => {
+    if (event.code === 'KeyP') {
+      event.preventDefault();
+      togglePause();
+    }
+  });
 }
 
 function gameLoop(timestamp) {
@@ -114,4 +233,7 @@ function gameLoop(timestamp) {
 }
 
 Input.init();
+bindUI();
+updateHUD();
+updateStatus('Press Start or Space to begin.');
 requestAnimationFrame(gameLoop);

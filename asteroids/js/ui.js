@@ -1,10 +1,43 @@
 const UI = {
   score: 0,
   level: 1,
+  scoreElement: null,
+  livesElement: null,
+  levelElement: null,
+  statusElement: null,
+
+  bindElements() {
+    this.scoreElement = document.getElementById('score');
+    this.livesElement = document.getElementById('lives');
+    this.levelElement = document.getElementById('level');
+    this.statusElement = document.getElementById('status');
+  },
+
+  renderStatus(lives) {
+    if (this.scoreElement) {
+      this.scoreElement.textContent = String(this.score);
+    }
+    if (this.levelElement) {
+      this.levelElement.textContent = String(this.level);
+    }
+    if (this.livesElement) {
+      this.livesElement.textContent = String(lives);
+    }
+  },
+
+  setStatus(message) {
+    if (this.statusElement) {
+      this.statusElement.textContent = message;
+    }
+  },
   
   init() {
+    if (!this.scoreElement) {
+      this.bindElements();
+    }
     this.score = 0;
     this.level = 1;
+    this.renderStatus(ship ? ship.lives : 3);
   },
   
   addScore(points) {
@@ -12,6 +45,7 @@ const UI = {
     if (this.score % 1000 === 0) {
       this.level++;
     }
+    this.renderStatus(ship ? ship.lives : 3);
   },
   
   draw(ctx) {

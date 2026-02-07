@@ -24,10 +24,14 @@
 - Prefer soft gradients, beveled edges, and clear focus states.
 - Maintain generous spacing for readability and accessibility.
 
+## UI Notes
+- Current inconsistency: Asteroids shows score/lives/level both in the shell status bar and in-canvas HUD; keep behavior as-is for now and standardize this presentation later across games.
+
 ## Menu Ordering
 - Keep the main menu list in alphabetical order by game title.
 
 ## Game Descriptions
+- Asteroids: Pilot a drifting ship through wraparound space, shatter asteroid waves, and survive with limited lives.
 - Conway's Game of Life: A simulation sandbox with step/run controls, randomize (about 1/3 filled), speed slider, and classic presets (glider, pulsar, lightweight ship).
 - Defender: Patrol a wraparound frontier with thrust controls, shoot down landers, and rescue falling civilians.
 - Hamurabi: Rule ancient Sumeria for ten years, balancing grain, land, and population through yearly reports and decisions.
