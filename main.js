@@ -37,6 +37,9 @@ const gameCopy = {
   "retro-racer": {
     href: "retro-racer/index.html",
   },
+  asteroids: {
+    href: "asteroids/index.html",
+  },
 };
 
 
