@@ -9,6 +9,7 @@ A browser-based collection of simple games and puzzles with a Windows XP-inspire
 - Hamurabi
 - Klondike Solitaire
 - Minesweeper
+- Retro Racer
 - Simon Says
 - Slalom
 - Snake

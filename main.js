@@ -34,6 +34,9 @@ const gameCopy = {
   hamurabi: {
     href: "hamurabi/index.html",
   },
+  "retro-racer": {
+    href: "retro-racer/index.html",
+  },
 };
 
 
