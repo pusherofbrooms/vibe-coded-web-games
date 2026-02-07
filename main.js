@@ -45,7 +45,9 @@ const gameCopy = {
 
 menuButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    const { href } = gameCopy[button.dataset.game] || {};
+    const explicitHref = button.dataset.href;
+    const { href: mappedHref } = gameCopy[button.dataset.game] || {};
+    const href = explicitHref || mappedHref;
     if (href) {
       window.location.href = href;
       return;
