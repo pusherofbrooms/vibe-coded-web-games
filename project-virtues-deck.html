@@ -116,6 +116,25 @@
         border-radius: 3px;
       }
 
+      .return-link {
+        margin-left: auto;
+        padding: 6px 10px;
+        border-top: 1px solid #fff;
+        border-left: 1px solid #fff;
+        border-right: 1px solid #8d9fb8;
+        border-bottom: 1px solid #8d9fb8;
+        background: linear-gradient(to bottom, #f7f9fc, #dce3ef);
+        border-radius: 3px;
+        text-decoration: none;
+        color: #1f2a3d;
+        font-weight: 600;
+      }
+
+      .return-link:hover,
+      .return-link:focus-visible {
+        box-shadow: 0 0 0 2px rgba(94, 129, 199, 0.35);
+      }
+
       @media (max-width: 700px) {
         .slide {
           padding: 20px;
@@ -144,6 +163,7 @@
         <div class="footer">
           <span>Slide 1 of 2</span>
           <span class="hint">Use Left/Right arrow keys, Space, or click to advance</span>
+          <a class="return-link" href="index.html">Back to Menu</a>
         </div>
       </section>
 
@@ -160,6 +180,7 @@
         <div class="footer">
           <span>Slide 2 of 2</span>
           <span class="hint">Press Home/End to jump slides</span>
+          <a class="return-link" href="index.html">Back to Menu</a>
         </div>
       </section>
     </main>
@@ -208,7 +229,10 @@
         }
       });
 
-      document.addEventListener('click', () => {
+      document.addEventListener('click', (event) => {
+        if (event.target.closest('a')) {
+          return;
+        }
         nextSlide();
       });
     </script>
