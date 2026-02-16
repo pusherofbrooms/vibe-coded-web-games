@@ -48,3 +48,6 @@
 ## Testing & Validation
 - If tests are added later, follow existing patterns.
 - Manually verify the menu and return flow after changes.
+
+## Presentation Maintenance
+- Keep `project-virtues-deck.html` in sync with the project whenever games are added or notable project capabilities change.
