@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Games & Puzzles | 2-Slide Deck</title>
+    <style>
+      :root {
+        --xp-bg-1: #f0f2f5;
+        --xp-bg-2: #d5dbe5;
+        --xp-panel-top: #fbfcfe;
+        --xp-panel-bottom: #d7deea;
+        --xp-border-light: #ffffff;
+        --xp-border-mid: #97a5bb;
+        --xp-border-dark: #667890;
+        --xp-text: #1f2a3d;
+        --xp-accent: #295ea8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Tahoma, "Segoe UI", sans-serif;
+        color: var(--xp-text);
+        background: radial-gradient(circle at 25% 15%, #ffffff 0%, var(--xp-bg-1) 45%, var(--xp-bg-2) 100%);
+      }
+
+      .deck {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .slide {
+        width: min(960px, 95vw);
+        min-height: min(620px, 88vh);
+        background: linear-gradient(to bottom, var(--xp-panel-top), var(--xp-panel-bottom));
+        border-top: 2px solid var(--xp-border-light);
+        border-left: 2px solid var(--xp-border-light);
+        border-right: 2px solid var(--xp-border-dark);
+        border-bottom: 2px solid var(--xp-border-dark);
+        box-shadow: inset 0 0 0 1px var(--xp-border-mid), 0 14px 30px rgba(22, 34, 56, 0.22);
+        border-radius: 6px;
+        padding: 30px;
+        display: none;
+      }
+
+      .slide.active {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .titlebar {
+        background: linear-gradient(to bottom, #5e8ed8, #2d67bb);
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+
+      h1,
+      h2 {
+        margin: 0;
+        line-height: 1.2;
+      }
+
+      h1 {
+        font-size: clamp(1.9rem, 4vw, 2.8rem);
+      }
+
+      h2 {
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+      }
+
+      p {
+        margin: 0;
+        font-size: clamp(1rem, 1.8vw, 1.2rem);
+        max-width: 70ch;
+      }
+
+      ul {
+        margin: 4px 0 0;
+        padding-left: 24px;
+        display: grid;
+        gap: 10px;
+        font-size: clamp(1rem, 1.8vw, 1.18rem);
+      }
+
+      strong {
+        color: var(--xp-accent);
+      }
+
+      .footer {
+        margin-top: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.92rem;
+        color: #34435b;
+      }
+
+      .hint {
+        padding: 6px 10px;
+        border-top: 1px solid #fff;
+        border-left: 1px solid #fff;
+        border-right: 1px solid #8d9fb8;
+        border-bottom: 1px solid #8d9fb8;
+        background: linear-gradient(to bottom, #f7f9fc, #dce3ef);
+        border-radius: 3px;
+      }
+
+      @media (max-width: 700px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="deck" aria-live="polite">
+      <section class="slide active" id="slide-1" aria-label="Slide 1">
+        <div class="titlebar">Games & Puzzles | Why This Project Matters</div>
+        <h1>A Focused Arcade Library That Is Easy to Build, Run, and Grow</h1>
+        <p>
+          This repo delivers a curated, browser-based collection of classics and puzzles with a cohesive XP-inspired shell and a simple menu-first flow.
+        </p>
+        <ul>
+          <li><strong>13 playable titles</strong> spanning arcade action, strategy, and memory games.</li>
+          <li><strong>Zero-build architecture</strong> (plain HTML/CSS/JS), so local run and static hosting are frictionless.</li>
+          <li><strong>Consistent navigation model</strong> keeps players oriented: launch from menu, return cleanly.</li>
+        </ul>
+        <div class="footer">
+          <span>Slide 1 of 2</span>
+          <span class="hint">Use Left/Right arrow keys, Space, or click to advance</span>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-2" aria-label="Slide 2">
+        <div class="titlebar">Games & Puzzles | Virtues in the Codebase</div>
+        <h2>Built for Sustainability: Modular, Accessible, and Ready to Ship</h2>
+        <ul>
+          <li><strong>Modular game folders</strong> isolate logic per title while sharing shell conventions.</li>
+          <li><strong>Responsive and accessible intent</strong> with explicit UI states and keyboard-friendly controls.</li>
+          <li><strong>Theme coherence</strong> from the Windows XP visual language creates clear project identity.</li>
+          <li><strong>Deployment simplicity</strong> makes GitHub Pages/Netlify/Vercel/Cloudflare Pages all viable with no build pipeline.</li>
+          <li><strong>Extensible structure</strong> allows new games to slot in quickly without architectural churn.</li>
+        </ul>
+        <div class="footer">
+          <span>Slide 2 of 2</span>
+          <span class="hint">Press Home/End to jump slides</span>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      let current = 0;
+
+      function showSlide(nextIndex) {
+        current = ((nextIndex % slides.length) + slides.length) % slides.length;
+        slides.forEach((slide, index) => {
+          slide.classList.toggle('active', index === current);
+        });
+      }
+
+      function nextSlide() {
+        showSlide(current + 1);
+      }
+
+      function prevSlide() {
+        showSlide(current - 1);
+      }
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight' || event.key === ' ' || event.key === 'PageDown') {
+          event.preventDefault();
+          nextSlide();
+          return;
+        }
+
+        if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+          event.preventDefault();
+          prevSlide();
+          return;
+        }
+
+        if (event.key === 'Home') {
+          event.preventDefault();
+          showSlide(0);
+          return;
+        }
+
+        if (event.key === 'End') {
+          event.preventDefault();
+          showSlide(slides.length - 1);
+        }
+      });
+
+      document.addEventListener('click', () => {
+        nextSlide();
+      });
+    </script>
+  </body>
+</html>
