@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Missile Command</title>
+    <link rel="stylesheet" href="missile-command.css" />
+  </head>
+  <body>
+    <main class="window">
+      <header class="window__title">
+        <h1>Missile Command</h1>
+        <p>Defend six cities from incoming missiles using mouse or touch targeting.</p>
+      </header>
+
+      <section class="layout">
+        <div class="board" aria-live="polite">
+          <div class="status-bar">
+            <div class="status-bar__panel">
+              <span class="status-label">Score</span>
+              <span id="score">0</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Wave</span>
+              <span id="wave">1</span>
+            </div>
+            <div class="status-bar__panel">
+              <span class="status-label">Cities</span>
+              <span id="cities">6</span>
+            </div>
+          </div>
+          <canvas id="game-canvas" width="960" height="540" aria-label="Missile Command playfield"></canvas>
+        </div>
+
+        <aside class="panel" aria-label="Controls and status">
+          <div class="panel__section">
+            <h2>Batteries</h2>
+            <div class="ammo-grid">
+              <div class="ammo-chip"><span>Left</span><strong id="ammo-left">10</strong></div>
+              <div class="ammo-chip"><span>Center</span><strong id="ammo-center">10</strong></div>
+              <div class="ammo-chip"><span>Right</span><strong id="ammo-right">10</strong></div>
+            </div>
+          </div>
+
+          <div class="panel__section">
+            <h2>Controls</h2>
+            <ul>
+              <li>Move mouse or drag to aim crosshair.</li>
+              <li>Click or tap sky to fire from the best available battery.</li>
+              <li>Press Space or Start to begin a run.</li>
+              <li>Press P or Pause to freeze and resume gameplay.</li>
+              <li>Destroy enemy missiles with your blast radius.</li>
+            </ul>
+          </div>
+
+          <div class="panel__section">
+            <h2>Status</h2>
+            <p id="status">Protect your cities. Survive as long as you can.</p>
+          </div>
+
+          <div class="actions">
+            <button type="button" id="start-button">Start</button>
+            <button type="button" id="pause-button">Pause</button>
+            <button type="button" id="restart-button">Restart</button>
+            <button class="back" type="button" id="back-button">Back to Menu</button>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="missile-command.js"></script>
+  </body>
+</html>

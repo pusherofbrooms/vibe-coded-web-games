@@ -4,6 +4,9 @@ const gameCopy = {
   minesweeper: {
     href: "minesweeper/index.html",
   },
+  "missile-command": {
+    href: "missile-command/index.html",
+  },
   conway: {
     href: "game-of-life/index.html",
   },

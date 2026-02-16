@@ -36,6 +36,7 @@
 - Defender: Patrol a wraparound frontier with thrust controls, shoot down landers, and rescue falling civilians.
 - Hamurabi: Rule ancient Sumeria for ten years, balancing grain, land, and population through yearly reports and decisions.
 - Minesweeper: A classic grid with beginner/intermediate/expert sizes, first-click safety, flagging, timer, and a reset face.
+- Missile Command: Defend six cities from incoming waves, intercepting missiles with expanding blasts aimed by mouse or touch, with Space-to-start and P-to-pause controls.
 - Retro Racer: Chase an endless pseudo-3D highway run inspired by arcade road racers, weaving through traffic, managing speed, and surviving three crashes.
 - Tetris: Classic falling tetrominoes with next preview, line clears, score, and keyboard controls.
 - Snake: A grid-based classic with growing length, speed ramping, and keyboard controls.
