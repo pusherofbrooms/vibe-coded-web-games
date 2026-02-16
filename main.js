@@ -40,6 +40,9 @@ const gameCopy = {
   "retro-racer": {
     href: "retro-racer/index.html",
   },
+  "river-raid": {
+    href: "river-raid/index.html",
+  },
   asteroids: {
     href: "asteroids/index.html",
   },

@@ -12,6 +12,7 @@ A browser-based collection of simple games and puzzles with a Windows XP-inspire
 - Minesweeper
 - Missile Command
 - Retro Racer
+- River Raid
 - Simon Says
 - Slalom
 - Snake
