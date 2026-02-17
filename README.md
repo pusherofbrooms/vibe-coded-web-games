@@ -8,6 +8,7 @@ A browser-based collection of simple games and puzzles with a Windows XP-inspire
 - Conway's Game of Life
 - Defender
 - Hamurabi
+- Joust
 - Klondike Solitaire
 - Minesweeper
 - Missile Command
