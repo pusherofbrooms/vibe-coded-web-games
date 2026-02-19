@@ -34,6 +34,7 @@
 - Asteroids: Pilot a drifting ship through wraparound space, shatter asteroid waves, and survive with limited lives.
 - Conway's Game of Life: A simulation sandbox with step/run controls, randomize (about 1/3 filled), speed slider, and classic presets (glider, pulsar, lightweight ship).
 - Defender: Patrol a wraparound frontier with thrust controls, shoot down landers, and rescue falling civilians.
+- Frogger: Guide a frog across busy roads and dangerous river lanes, riding moving platforms to fill all home slots before time runs out.
 - Hamurabi: Rule ancient Sumeria for ten years, balancing grain, land, and population through yearly reports and decisions.
 - Joust: Ride a flying mount through a wraparound arena, defeat enemy riders by striking from above, and manage egg/hatchling threats over escalating waves.
 - Minesweeper: A classic grid with beginner/intermediate/expert sizes, first-click safety, flagging, timer, and a reset face.

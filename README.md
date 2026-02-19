@@ -7,6 +7,7 @@ A browser-based collection of simple games and puzzles with a Windows XP-inspire
 - Breakout
 - Conway's Game of Life
 - Defender
+- Frogger
 - Hamurabi
 - Joust
 - Klondike Solitaire

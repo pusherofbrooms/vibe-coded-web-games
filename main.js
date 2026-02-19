@@ -13,6 +13,9 @@ const gameCopy = {
   defender: {
     href: "defender/index.html",
   },
+  frogger: {
+    href: "frogger/index.html",
+  },
   tetris: {
     href: "tetris/index.html",
   },
