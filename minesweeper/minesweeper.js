@@ -45,7 +45,7 @@ function createMatrix(value) {
 
 function buildGrid() {
   gridElement.innerHTML = "";
-  gridElement.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+  gridElement.style.gridTemplateColumns = `repeat(${columns}, minmax(0, 1fr))`;
   const fragment = document.createDocumentFragment();
 
   for (let row = 0; row < rows; row += 1) {
