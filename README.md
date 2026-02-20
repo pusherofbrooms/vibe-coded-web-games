@@ -13,6 +13,7 @@ A browser-based collection of simple games and puzzles with a Windows XP-inspire
 - Klondike Solitaire
 - Minesweeper
 - Missile Command
+- Pac-Man
 - Retro Racer
 - River Raid
 - Simon Says

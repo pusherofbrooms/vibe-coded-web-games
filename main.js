@@ -7,6 +7,9 @@ const gameCopy = {
   "missile-command": {
     href: "missile-command/index.html",
   },
+  pacman: {
+    href: "pacman/index.html",
+  },
   conway: {
     href: "game-of-life/index.html",
   },

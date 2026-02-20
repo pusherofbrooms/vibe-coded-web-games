@@ -39,6 +39,7 @@
 - Joust: Ride a flying mount through a wraparound arena, defeat enemy riders by striking from above, and manage egg/hatchling threats over escalating waves.
 - Minesweeper: A classic grid with beginner/intermediate/expert sizes, first-click safety, flagging, timer, and a reset face.
 - Missile Command: Defend six cities from incoming waves, intercepting missiles with expanding blasts aimed by mouse or touch, with Space-to-start and P-to-pause controls.
+- Pac-Man: Navigate maze corridors, eat pellets and power pellets, dodge ghosts, and clear each board while chasing high scores.
 - Retro Racer: Chase an endless pseudo-3D highway run inspired by arcade road racers, weaving through traffic, managing speed, and surviving three crashes.
 - River Raid: Fly up a scrolling river, destroy enemy targets and bridges, collect fuel, and avoid crashing into the banks.
 - Tetris: Classic falling tetrominoes with next preview, line clears, score, and keyboard controls.
