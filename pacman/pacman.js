@@ -13,27 +13,50 @@ const context = canvas.getContext("2d");
 
 const tileSize = 30;
 const mapRows = [
-  "###################",
-  "#o.......#.......o#",
-  "#.###.##.#.##.###.#",
-  "#.................#",
-  "#.###.#.###.#.###.#",
-  "#.....#...#.#.....#",
-  "###.#.###.#.###.#.#",
-  "#...#.....#.....#.#",
-  "#.#####.#...#.###.#",
-  "#.......##.##.....#",
-  ".........#.........",
-  "#.#####.#...#.###.#",
-  "#...#.....#.....#.#",
-  "###.#.###.#.###.#.#",
-  "#.....#...#.#.....#",
-  "#.###.#.###.#.###.#",
-  "#.................#",
-  "#.###.##.#.##.###.#",
-  "#o..#....#....#..o#",
-  "#.................#",
-  "###################",
+    "#####################",
+    "#.........#.........#",
+    "#o##.####.#.####.##o#",
+    "#...................#",
+    "#.##.#.#######.#.##.#",
+    "#....#....#....#....#",
+    "####.####.#.####.####",
+    "####.#.........#.####",
+    "####.#.###=###.#.####",
+    "####.#.#     #.#.####",
+    ".......#     #.......",
+    "####.#.#     #.#.####",
+    "####.#.#######.#.####",
+    "####.#.........#.####",
+    "####.#.#######.#.####",
+    "#.........#.........#",
+    "#.##.####.#.####.##.#",
+    "#..#.............#..#",
+    "##.#.#.#######.#.#.##",
+    "#....#....#....#....#",
+    "#o#######.#.#######o#",
+    "#...................#",
+    "#####################",
+    // "###################",
+    // "#........#........#",
+    // "#o###.##.#.##.###o#",
+    // "#.................#",
+    // "#.###.#.###.#.###.#",
+    // "#.....#..#..#.....#",
+    // "###.#.##.#.###..###",
+    // "#...#.....#.....#.#",
+    // "#.#####.#...#.###.#",
+    // "#.......#=#.......#",
+    // ".......#   #.......",
+    // "#......#   #......#",
+    // "#.......###.......#",
+    // "#.#####.#...#.###.#",
+    // "#...#.....#.....#.#",
+    // "###.#.###.#.###.#.#",
+    // "#.....#...#.#.....#",
+    // "#.###.#.###.#.###.#",
+    // "#o...............o#",
+    // "#.................#",
+    // "###################",
 ];
 
 const mapHeight = mapRows.length;
@@ -61,15 +84,15 @@ const touchDirectionByAction = {
 
 const ghostPalette = ["#ff4d6d", "#55d6ff", "#ffb347", "#b07dff"];
 const ghostStartTiles = [
-  { x: 9, y: 9 },
-  { x: 8, y: 10 },
-  { x: 10, y: 10 },
+  { x: 9, y: 10 },
+  { x: 8, y: 11 },
+  { x: 10, y: 11 },
   { x: 9, y: 11 },
 ];
 
 const baseMoveInterval = {
-  player: 130,
-  ghost: 175,
+  player: 124,
+  ghost: 196,
 };
 
 const centerTolerance = 0.08;
@@ -85,8 +108,8 @@ const state = {
   gameOver: false,
   board: [],
   player: {
-    x: 9,
-    y: 16,
+    x: 10,
+    y: 17,
     direction: { x: 0, y: 0 },
     pendingDirection: { x: 0, y: 0 },
   },
@@ -141,27 +164,60 @@ function cellAt(x, y) {
   return state.board[y][wrapX(x)];
 }
 
-function isWall(x, y) {
-  return cellAt(x, y) === "#";
+function isWall(tile) {
+  return tile === "#" || tile === "=";
 }
 
-function canMoveFromTile(tileX, tileY, direction) {
+function canMoveFromTile(tileX, tileY, direction, moverType = "player") {
   if (direction.x === 0 && direction.y === 0) {
     return false;
   }
   const nextX = wrapX(tileX + direction.x);
   const nextY = tileY + direction.y;
-  return !isWall(nextX, nextY);
+  const nextTile = cellAt(nextX, nextY);
+  if (nextTile === "#") {
+    return false;
+  }
+  if (nextTile === "=" && moverType !== "ghost") {
+    return false;
+  }
+  return true;
 }
 
-function canMove(x, y, direction) {
-  return canMoveFromTile(toTileX(x), toTileY(y), direction);
+function canMove(x, y, direction, moverType = "player") {
+  return canMoveFromTile(toTileX(x), toTileY(y), direction, moverType);
 }
 
 function getMoveInterval(entityType) {
-  const baseInterval = baseMoveInterval[entityType];
-  const speedBoost = (state.level - 1) * (entityType === "player" ? 6 : 5);
-  return Math.max(entityType === "player" ? 70 : 90, baseInterval - speedBoost);
+  const levelIndex = Math.max(0, state.level - 1);
+  if (entityType === "player") {
+    return Math.max(76, baseMoveInterval.player - levelIndex * 4);
+  }
+  return Math.max(104, baseMoveInterval.ghost - levelIndex * 7);
+}
+
+function getPowerDurationMs() {
+  return Math.max(5000, 9200 - (state.level - 1) * 700);
+}
+
+function getGhostReleaseDelay(index) {
+  if (state.level <= 1) {
+    return [0, 3400, 6800, 9800][index];
+  }
+  if (state.level === 2) {
+    return [0, 2000, 4200, 6500][index];
+  }
+  return [0, 1200, 2600, 4000][index];
+}
+
+function getCollisionThreshold() {
+  if (state.level <= 1) {
+    return 0.33;
+  }
+  if (state.level === 2) {
+    return 0.36;
+  }
+  return 0.4;
 }
 
 function createGhost(index) {
@@ -172,7 +228,7 @@ function createGhost(index) {
     startX: start.x,
     startY: start.y,
     direction: index % 2 === 0 ? { x: -1, y: 0 } : { x: 1, y: 0 },
-    frozenTimer: 0,
+    frozenTimer: getGhostReleaseDelay(index),
     color: ghostPalette[index],
   };
 }
@@ -199,7 +255,7 @@ function isNearTileCenter(entity) {
   );
 }
 
-function moveOneStep(entity, amount) {
+function moveOneStep(entity, amount, moverType = "player") {
   if (entity.direction.x === 0 && entity.direction.y === 0) {
     return false;
   }
@@ -212,7 +268,7 @@ function moveOneStep(entity, amount) {
     const nextX = entity.x + amount * entity.direction.x;
     const crossingRight = entity.direction.x === 1 && entity.x < boundary && nextX > boundary;
     const crossingLeft = entity.direction.x === -1 && entity.x > boundary && nextX < boundary;
-    if ((crossingRight || crossingLeft) && !canMoveFromTile(tileX, tileY, entity.direction)) {
+    if ((crossingRight || crossingLeft) && !canMoveFromTile(tileX, tileY, entity.direction, moverType)) {
       entity.x = boundary - entity.direction.x * 0.001;
       return false;
     }
@@ -223,7 +279,7 @@ function moveOneStep(entity, amount) {
     const nextY = entity.y + amount * entity.direction.y;
     const crossingDown = entity.direction.y === 1 && entity.y < boundary && nextY > boundary;
     const crossingUp = entity.direction.y === -1 && entity.y > boundary && nextY < boundary;
-    if ((crossingDown || crossingUp) && !canMoveFromTile(tileX, tileY, entity.direction)) {
+    if ((crossingDown || crossingUp) && !canMoveFromTile(tileX, tileY, entity.direction, moverType)) {
       entity.y = boundary - entity.direction.y * 0.001;
       return false;
     }
@@ -237,8 +293,8 @@ function moveOneStep(entity, amount) {
 }
 
 function resetCharacters() {
-  state.player.x = 9;
-  state.player.y = 16;
+  state.player.x = 10;
+  state.player.y = 17;
   state.player.direction = { x: 0, y: 0 };
   state.player.pendingDirection = { x: 0, y: 0 };
   state.ghosts = ghostPalette.map((_, index) => createGhost(index));
@@ -255,8 +311,8 @@ function resetBoardForLevel() {
       }
     }
   }
-  const spawnX = 9;
-  const spawnY = 16;
+  const spawnX = 10;
+  const spawnY = 17;
   if (state.board[spawnY][spawnX] === "." || state.board[spawnY][spawnX] === "o") {
     state.board[spawnY][spawnX] = " ";
     state.pelletsRemaining -= 1;
@@ -318,7 +374,7 @@ function consumeTile() {
   state.score += tile === "o" ? 50 : 10;
 
   if (tile === "o") {
-    state.powerModeTimer = 7000;
+    state.powerModeTimer = getPowerDurationMs();
     state.ghostCombo = 0;
     updateStatus("Power up! Hunt ghosts.");
   }
@@ -341,10 +397,10 @@ function movePlayer(deltaTime) {
     if (isNearTileCenter(player)) {
       player.x = Math.round(player.x);
       player.y = Math.round(player.y);
-      if (canMove(player.x, player.y, player.pendingDirection)) {
+      if (canMove(player.x, player.y, player.pendingDirection, "player")) {
         player.direction = cloneDirection(player.pendingDirection);
       }
-      if (!canMove(player.x, player.y, player.direction)) {
+      if (!canMove(player.x, player.y, player.direction, "player")) {
         player.direction = { x: 0, y: 0 };
       }
     }
@@ -353,7 +409,7 @@ function movePlayer(deltaTime) {
       break;
     }
 
-    const moved = moveOneStep(player, stepTiles);
+    const moved = moveOneStep(player, stepTiles, "player");
     if (!moved) {
       player.direction = { x: 0, y: 0 };
       break;
@@ -390,7 +446,7 @@ function getAvailableDirections(entity) {
 
   const tileX = toTileX(entity.x);
   const tileY = toTileY(entity.y);
-  return allDirections.filter((candidate) => canMoveFromTile(tileX, tileY, candidate));
+  return allDirections.filter((candidate) => canMoveFromTile(tileX, tileY, candidate, "ghost"));
 }
 
 function chooseGhostDirection(ghost) {
@@ -441,7 +497,7 @@ function moveGhosts(deltaTime) {
         ghost.direction = chooseGhostDirection(ghost);
       }
 
-      const moved = moveOneStep(ghost, stepTiles);
+      const moved = moveOneStep(ghost, stepTiles, "ghost");
       if (!moved) {
         ghost.direction = chooseGhostDirection(ghost);
         break;
@@ -482,11 +538,12 @@ function handleGhostCollision(ghost) {
 function checkCollisions() {
   const playerX = state.player.x;
   const playerY = state.player.y;
+  const collisionThreshold = getCollisionThreshold();
   for (const ghost of state.ghosts) {
     const dxRaw = Math.abs(playerX - ghost.x);
     const dx = Math.min(dxRaw, mapWidth - dxRaw);
     const dy = Math.abs(playerY - ghost.y);
-    if (dx < 0.45 && dy < 0.45) {
+    if (dx < collisionThreshold && dy < collisionThreshold) {
       handleGhostCollision(ghost);
       break;
     }
@@ -547,6 +604,13 @@ function drawPellet(x, y, tile) {
   context.beginPath();
   context.arc(centerX, centerY, radius, 0, Math.PI * 2);
   context.fill();
+}
+
+function drawGate(x, y) {
+  const px = x * tileSize;
+  const py = y * tileSize;
+  context.fillStyle = "#f29be9";
+  context.fillRect(px + 4, py + tileSize / 2 - 2, tileSize - 8, 4);
 }
 
 function drawPlayer() {
@@ -642,6 +706,8 @@ function render() {
       const tile = state.board[y][x];
       if (tile === "#") {
         drawWall(x, y);
+      } else if (tile === "=") {
+        drawGate(x, y);
       } else if (tile === "." || tile === "o") {
         drawPellet(x, y, tile);
       }
