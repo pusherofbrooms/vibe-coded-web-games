@@ -197,7 +197,7 @@ button:active {
 #status,
 #score,
 #speed,
-#road-width {
+#gates {
   font-variant-numeric: tabular-nums;
 }
 
