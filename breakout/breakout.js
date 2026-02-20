@@ -300,7 +300,10 @@ function drawBall() {
 }
 
 function update(time = 0) {
-  const delta = (time - lastTime) / 1000;
+  if (lastTime === 0) {
+    lastTime = time;
+  }
+  const delta = Math.min(0.05, Math.max(0, (time - lastTime) / 1000));
   lastTime = time;
 
   if (gameActive && !paused) {
