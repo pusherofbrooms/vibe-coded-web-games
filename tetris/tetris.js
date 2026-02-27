@@ -356,7 +356,7 @@ function endGame() {
   paused = false;
   resetButton.textContent = "Reset";
   updatePauseButton();
-  updateStatus("Game over. Press Reset to try again.");
+  updateStatus("Game over. Press Reset, Enter, or Space to try again.");
 }
 
 function togglePause() {
@@ -420,7 +420,7 @@ function handleInput(event) {
   }
 
   if (!gameActive) {
-    if (code === "Enter") {
+    if (code === "Enter" || code === "Space") {
       startGame();
     }
     return;
@@ -504,6 +504,6 @@ resetBoard();
 currentPiece = null;
 nextPieceType = null;
 updateScoreboard();
-updateStatus("Press Start to play.");
+updateStatus("Press Start, Enter, or Space to play.");
 updatePauseButton();
 window.requestAnimationFrame(update);
