@@ -151,6 +151,14 @@ function canPlaceOnFoundation(card, foundation) {
   return card.suit === topCard.suit && card.rank === topCard.rank + 1;
 }
 
+function parseIndexedPileId(pileId, type) {
+  const match = pileId.match(new RegExp(`^${type}-(\\d+)$`));
+  if (!match) {
+    return null;
+  }
+  return Number(match[1]);
+}
+
 function getPileArray(pileId) {
   if (pileId === "stock") {
     return gameState.stock;
@@ -159,11 +167,14 @@ function getPileArray(pileId) {
     return gameState.waste;
   }
   if (pileId.startsWith("foundation")) {
-    const index = Number(pileId.split("-")[1]);
-    return gameState.foundations[index];
+    const index = parseIndexedPileId(pileId, "foundation");
+    return index == null ? null : gameState.foundations[index];
   }
-  const tableauIndex = Number(pileId.split("-")[1]);
-  return gameState.tableau[tableauIndex];
+  if (pileId.startsWith("tableau")) {
+    const tableauIndex = parseIndexedPileId(pileId, "tableau");
+    return tableauIndex == null ? null : gameState.tableau[tableauIndex];
+  }
+  return null;
 }
 
 function getPileElement(pileId) {
@@ -174,11 +185,14 @@ function getPileElement(pileId) {
     return piles.waste;
   }
   if (pileId.startsWith("foundation")) {
-    const index = Number(pileId.split("-")[1]);
-    return piles.foundations[index];
+    const index = parseIndexedPileId(pileId, "foundation");
+    return index == null ? null : piles.foundations[index];
   }
-  const tableauIndex = Number(pileId.split("-")[1]);
-  return piles.tableau[tableauIndex];
+  if (pileId.startsWith("tableau")) {
+    const tableauIndex = parseIndexedPileId(pileId, "tableau");
+    return tableauIndex == null ? null : piles.tableau[tableauIndex];
+  }
+  return null;
 }
 
 function getCardSource(cardId) {
@@ -204,7 +218,10 @@ function getCardSource(cardId) {
   const tableauIndex = allPiles.tableau.findIndex((column) =>
     column.some((card) => card.id === cardId)
   );
-  return { pileId: `tableau-${tableauIndex}`, pileIndex: tableauIndex };
+  if (tableauIndex >= 0) {
+    return { pileId: `tableau-${tableauIndex}`, pileIndex: tableauIndex };
+  }
+  return null;
 }
 
 function getCardById(cardId) {
@@ -294,9 +311,12 @@ function handleCardClick(cardId, event) {
   }
   if (!card.isFaceUp) {
     const source = getCardSource(card.id);
+    if (!source) {
+      return;
+    }
     if (source.pileId.startsWith("tableau")) {
       const column = getPileArray(source.pileId);
-      if (column[column.length - 1]?.id === card.id) {
+      if (column && column[column.length - 1]?.id === card.id) {
         card.isFaceUp = true;
         recordMove({ type: "flip", card });
         updateStatus("Revealed a card.");
@@ -308,8 +328,14 @@ function handleCardClick(cardId, event) {
 
 function attemptAutoFoundation(card) {
   const source = getCardSource(card.id);
+  if (!source) {
+    return;
+  }
   if (source.pileId.startsWith("tableau")) {
     const column = getPileArray(source.pileId);
+    if (!column) {
+      return;
+    }
     const index = column.findIndex((item) => item.id === card.id);
     if (index !== column.length - 1) {
       return;
@@ -335,6 +361,10 @@ function attemptAutoFoundation(card) {
 function moveCards(cardId, fromPileId, toPileId) {
   const fromPile = getPileArray(fromPileId);
   const toPile = getPileArray(toPileId);
+  if (!fromPile || !toPile || fromPileId === toPileId) {
+    return false;
+  }
+
   const cardIndex = fromPile.findIndex((card) => card.id === cardId);
   if (cardIndex < 0) {
     return false;
@@ -393,13 +423,17 @@ function moveCards(cardId, fromPileId, toPileId) {
 }
 
 function cardDragStart(cardId, event) {
+  if (!event.isPrimary || event.button !== 0) {
+    return;
+  }
+
   const card = getCardById(cardId);
   if (!card || !card.isFaceUp) {
     return;
   }
 
   const source = getCardSource(cardId);
-  if (source.pileId === "stock") {
+  if (!source || source.pileId === "stock") {
     return;
   }
   if (source.pileId === "waste") {
@@ -410,15 +444,22 @@ function cardDragStart(cardId, event) {
   }
   if (source.pileId.startsWith("foundation")) {
     const foundation = getPileArray(source.pileId);
-    if (foundation[foundation.length - 1]?.id !== cardId) {
+    if (!foundation || foundation[foundation.length - 1]?.id !== cardId) {
       return;
     }
   }
 
   const fromPile = getPileArray(source.pileId);
-  const cardIndex = fromPile.findIndex((item) => item.id === cardId);
-  const movingCards = fromPile.slice(cardIndex);
+  if (!fromPile) {
+    return;
+  }
 
+  const cardIndex = fromPile.findIndex((item) => item.id === cardId);
+  if (cardIndex < 0) {
+    return;
+  }
+
+  const movingCards = fromPile.slice(cardIndex);
   if (movingCards.some((item) => !item.isFaceUp)) {
     return;
   }
@@ -439,6 +480,10 @@ function cardDragStart(cardId, event) {
 }
 
 function beginDragging(event) {
+  if (!dragState || event.pointerId !== dragState.pointerId) {
+    return;
+  }
+
   const { element } = dragState;
   const rect = element.getBoundingClientRect();
   dragState.offsetX = event.clientX - rect.left;
@@ -455,9 +500,10 @@ function beginDragging(event) {
 }
 
 function cardDragMove(event) {
-  if (!dragState) {
+  if (!dragState || event.pointerId !== dragState.pointerId) {
     return;
   }
+
   const deltaX = Math.abs(event.clientX - dragState.startX);
   const deltaY = Math.abs(event.clientY - dragState.startY);
 
@@ -475,7 +521,7 @@ function cardDragMove(event) {
 }
 
 function cardDragEnd(event) {
-  if (!dragState) {
+  if (!dragState || event.pointerId !== dragState.pointerId) {
     return;
   }
 
@@ -486,22 +532,27 @@ function cardDragEnd(event) {
     return;
   }
 
-  const dropTarget = document.elementFromPoint(event.clientX, event.clientY)?.closest(".pile");
-
   clearHighlights();
   element.classList.remove("is-dragging");
   element.style.position = "";
   element.style.left = "";
   element.style.top = "";
   element.style.zIndex = "";
-  if (pointerId != null) {
+  if (pointerId != null && element.hasPointerCapture(pointerId)) {
     element.releasePointerCapture(pointerId);
   }
 
+  if (event.type === "lostpointercapture") {
+    renderBoard();
+    return;
+  }
+
+  const dropTarget = document.elementFromPoint(event.clientX, event.clientY)?.closest(".pile");
   if (!dropTarget) {
     renderBoard();
     return;
   }
+
   const targetPileId = dropTarget.dataset.pile;
   if (!targetPileId || targetPileId === fromPileId) {
     renderBoard();
@@ -586,6 +637,7 @@ function renderCard(card, index, pileId, topOffset) {
   cardElement.addEventListener("pointermove", cardDragMove);
   cardElement.addEventListener("pointerup", cardDragEnd);
   cardElement.addEventListener("pointercancel", cardDragEnd);
+  cardElement.addEventListener("lostpointercapture", cardDragEnd);
 
   return cardElement;
 }
@@ -674,6 +726,33 @@ function setupInteractions() {
     highlightTargets(topCard);
     window.setTimeout(clearHighlights, 500);
   });
+
+  window.addEventListener("pointermove", cardDragMove);
+  window.addEventListener("pointerup", cardDragEnd);
+  window.addEventListener("pointercancel", cardDragEnd);
+  window.addEventListener("blur", () => {
+    if (!dragState) {
+      return;
+    }
+
+    const { element, pointerId, isDragging } = dragState;
+    dragState = null;
+    if (!isDragging) {
+      return;
+    }
+
+    clearHighlights();
+    element.classList.remove("is-dragging");
+    element.style.position = "";
+    element.style.left = "";
+    element.style.top = "";
+    element.style.zIndex = "";
+    if (pointerId != null && element.hasPointerCapture(pointerId)) {
+      element.releasePointerCapture(pointerId);
+    }
+    renderBoard();
+  });
+
   newGameButton.addEventListener("click", dealNewGame);
   undoButton.addEventListener("click", undoMove);
   backButton.addEventListener("click", () => {
